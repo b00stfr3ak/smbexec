@@ -96,17 +96,11 @@ module Lib_meta
 			else
 				# If not xterm, try putting shells in screens
 				print_status("Launching Metasploit in a screen session, once loaded hit Ctrl-a then Ctrl-d to detach and continue setup")
-				puts "Press enter to continue"
-				puts
+        print 'Print enter to continue: '
 				gets
 
-				screen = "screen -S smbexec_msfhandler"
-				system("#{screen} bash -c 'msfconsole -r #{rc} -q -x \"screen -d\"'")
-
-
-				sleep 1
-
-				print_status("msf handler started in screen")
+         time = Time.now.strftime('%m-%d-%Y_%H-%M')
+         system("screen -mS Metasploit_#{time} -t msfconsole bash -c 'msfconsole -r #{rc}'")
 			end
 		else
 			print_bad("Resource file doesn't seem to exist at #{rc}...")
