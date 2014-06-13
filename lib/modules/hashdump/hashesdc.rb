@@ -22,8 +22,8 @@ class Hashesdc < Poet::Scanner
 
 		# Normalize drive letter and check validity
 		while true
-			print "Enter the Drive to save the Shadow Copy and SYS key #{color_banner('[C:]')}: "
-			@drive = rgets.upcase
+			@drive = ask("Enter the Drive to save the Shadow Copy and SYS key #{color_banner('[C:]')}: ", 'C:')
+      @drive.upcase!
 			if @drive =~ /^[A-Z]$/
 				@drive = "#{@drive}:"
 				break
@@ -42,8 +42,8 @@ class Hashesdc < Poet::Scanner
 
 		# Get valid path
 		while true
-			print "Enter the Path to save the Shadow Copy and SYS key #{color_banner('[\\Windows\\TEMP]')} : "
-			@drop_path = rgets
+			@drop_path = ask("Enter the Path to save the Shadow Copy and SYS key #{color_banner('[\\Windows\\TEMP]')} : ",
+                       "\\Windows\\TEMP")
 			if @drop_path =~ /^\\/
 				break
 			elsif @drop_path.empty?
@@ -56,8 +56,9 @@ class Hashesdc < Poet::Scanner
 
 		# Normalize drive letter and check validity
 		while true
-			print "Enter the Drive where the NTDS.dit file is #{color_banner('[C:]')}: "
-			@ntds_drive = rgets.upcase
+			@ntds_drive = ask("Enter the Drive where the NTDS.dit file is #{color_banner('[C:]')}: ",
+                        'C:')
+      @ntds_drive.upcase!
 			if @ntds_drive =~ /^[A-Z]$/
 				@ntds_drive = "#{@drive}:"
 				break
@@ -76,8 +77,8 @@ class Hashesdc < Poet::Scanner
 
 		# Get valid path
 		while true
-			print "Enter the Path to the NTDS.dit file #{color_banner('[\\Windows\\NTDS]')} : "
-			@ntds = rgets
+			@ntds = ask("Enter the Path to the NTDS.dit file #{color_banner('[\\Windows\\NTDS]')} : ",
+                  "\\Windows\\NTDS")
 			if @ntds =~ /^\\$/
 				@ntds = ''
 				break

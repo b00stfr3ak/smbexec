@@ -11,8 +11,8 @@ class Filefind < Poet::Scanner
 		@timeout = 0
 
 		# Get valid path
-		print "Enter path to file or list of items or look for #{color_banner('[unattend.txt, unattend.xml, sysprep.*]')} :"
-		ext = rgets
+		ext = ask("Enter path to file or list of items or look for #{color_banner('[unattend.txt, unattend.xml, sysprep.*]')} :",
+              "unattend.txt, unattend.xml, sysprep.*")
 		if ext.empty?
 			ext = "unattend.txt, unattend.xml, sysprep.*"
 		elsif File.file? ext

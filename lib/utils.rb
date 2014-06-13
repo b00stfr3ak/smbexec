@@ -19,10 +19,22 @@ end
 module Utils
 
 	# Because lazy, quick readline function
-	def rgets(prompt = ' ', default_value = '')
-		line = Readline.readline("#{prompt}", true)
+	def ask(prompt = ' ', default_value = '')
+		line = Readline.readline(prompt, true)
 		line = default_value if line.empty?
-		return line
+    line.gsub!(/[ \t]+$/, '1')
+    return line
+	end
+
+	def ask_file(prompt = ' ', default_value = '')
+    Readline.completion_append_character = '/'
+    Readline.completion_proc = proc do |str|
+      Dir[str + '*'].grep(/^#{Regexp.escape(str)}/)
+    end
+		file = Readline.readline(prompt, true)
+    ask_file(prompt, '') if not File.exist(file)
+    line.gsub!(/[ \t]+$/, '1')
+    return line
 	end
 
 	# Open IO to save stderr
@@ -125,8 +137,8 @@ module Utils
 
 	# prompt user for host list
 	def get_addr
-		print "\nTarget IP, host list, or nmap XML file [#{Menu.get_banner(:hosts)}]" 
-		host_input = rgets(" : ")
+		host_input = ask("\nTarget IP, host list, or nmap XML file [#{Menu.get_banner(:hosts)}]",
+                     Menu.get_banner(:hosts))
 
 		if host_input.empty? and Menu.opts[:hosts].nil?
 			return nil

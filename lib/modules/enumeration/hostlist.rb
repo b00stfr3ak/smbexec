@@ -8,8 +8,8 @@ class Hostlist < Poet
 	def initialize
 		local_addr = local_ip
 		local_addr.sub!(/\.\d+$/,'.0/24') unless local_addr.empty?
-		print "\nEnter target network range [#{color_banner(local_addr)}] :"
-		range = rgets
+		range = ask("\nEnter target network range [#{color_banner(local_addr)}] :",
+                '')
 		range = local_addr if range.empty?
 		hostlist = Array.new
 

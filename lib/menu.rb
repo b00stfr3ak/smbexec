@@ -59,7 +59,7 @@ class Menu
 		
 		# Catch interupt and call cleanup method
 		begin
-			menu(rgets(" : ").strip)
+			menu(ask(': ', ''))
 		rescue SignalException
 			exit
 		end
@@ -101,8 +101,8 @@ class Menu
 
 		# Quiet save state for when quit or other needed cases
 		unless quiet
-			print("Enter filename for save state [#{color_banner(save_name)}]:")
-			new_name = rgets
+			new_name = ask("Enter filename for save state [#{color_banner(save_name)}]: ",
+                     save_name)
 
 			# Check if empty, if not check if ends in '.yml'
 			save_name = new_name unless new_name.empty?
@@ -140,8 +140,7 @@ class Menu
 		
 		# Make sure the user gives a valid selection
 		until (1..state_files.length+1).member?(to_load.to_i)
-			print "Which state do you wish to load?"
-			to_load = rgets
+			to_load = ask("Which state do you wish to load?[#{color_banner(1)}] ", 1)
 		end
 
 		# Return to previous menu
@@ -175,11 +174,11 @@ class Menu
   def generate_ssl
     puts color_header("Create Certificates\n")
 
-    country = rgets("Enter country #{color_banner('US')} : ", "US")
-    state = rgets("Enter state #{color_banner('Denial')} : ", "Denial")
-    city = rgets("Enter city #{color_banner('Goawaysville')} : ", "Goawaysville")
-    org = rgets("Enter orginization #{color_banner('Legitimate Web Traffic Inc')} : ", "Legitimate Web Traffic Inc")
-    cn = rgets("Enter website #{color_banner('Goawaysville.com')} : ", "Goawaysville.com")
+    country = ask("Enter country #{color_banner('US')} : ", "US")
+    state = ask("Enter state #{color_banner('Denial')} : ", "Denial")
+    city = ask("Enter city #{color_banner('Goawaysville')} : ", "Goawaysville")
+    org = ask("Enter orginization #{color_banner('Legitimate Web Traffic Inc')} : ", "Legitimate Web Traffic Inc")
+    cn = ask("Enter website #{color_banner('Goawaysville.com')} : ", "Goawaysville.com")
 
     cert_cmd = "openssl req -x509 -nodes -days 365 -newkey rsa:2048  -subj "
     cert_cmd << "/C='#{country}'/ST='#{state}'/L='#{city}'/O='#{org}'/CN='#{cn}' "
